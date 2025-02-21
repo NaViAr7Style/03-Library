@@ -42,8 +42,8 @@ jobs:
       run: npm run test
 
   deploy_server:
-    runs-on: ubuntu-latest
     needs: build_and_test
+    runs-on: ubuntu-latest
 
     steps:
     - name: Clone the GitHub repository on the runner
@@ -53,5 +53,20 @@ jobs:
       uses: JorgeLNJunior/render-deploy@v1.4.5
       with:
         service_id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+        api_key: ${{ secrets.MY_RENDER_API_KEY }}
+        wait_deploy: true
+  
+  deploy_front_end:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clone the GitHub repository on the runner
+      uses: actions/checkout@v4
+    
+    - name: Deploy server to Render
+      uses: JorgeLNJunior/render-deploy@v1.4.5
+      with:
+        service_id: ${{ secrets.RENDER_FE_SERVICE_ID }}
         api_key: ${{ secrets.MY_RENDER_API_KEY }}
         wait_deploy: true
