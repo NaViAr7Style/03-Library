@@ -9,18 +9,15 @@ on:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
-    
-    strategy:
-      fail-fast: true
 
     steps:
     - name: Clone the repository on the runner
       uses: actions/checkout@v4
       
-    - name: Use Node.js 20
+    - name: Use Node.js v20
       uses: actions/setup-node@v4
       with:
-        node-version: 20.x
+        node-version: 20
         cache: 'npm'
 
     - name: Clean install NPM modules
@@ -30,7 +27,7 @@ jobs:
       run: npx playwright install
 
     - name: Replace the backend endpoint
-      run: echo "export const settings = {host:\"https://localhost:3030\"}," > src/config.js
+      run: echo "export const settings = {host:\'http://localhost:3030\'}" > src/config.js
 
     - name: Start server
       run: npm run server &
