@@ -30,7 +30,7 @@ jobs:
       run: npx playwright install
 
     - name: Replace the backend endpoint
-      run: echo "export const settings = {host:\"https://localhost:3030\"}" > src/config.js
+      run: echo "export const settings = {host:\"https://localhost:3030\"}," > src/config.js
 
     - name: Start server
       run: npm run server &
